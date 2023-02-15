@@ -1,29 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-import { NavbarContainer, Logo, NavbarLeft, Menu } from './Navbar.styles';
+import { NavbarContainer, Logo } from './Navbar.styles';
+import MenuList from './MenuList';
+import ExtendedNavbar from './ExtendedNavbar';
 
 const Navbar = () => {
-  const MENU_LIST = {
-    Home: '/',
-    Member: '/member',
-    Activity: '/activity',
-  };
-
   return (
-    <NavbarContainer>
-      <Logo />
-      <NavbarLeft>
-        {Object.entries(MENU_LIST).map((el, idx) => {
-          let [menu, address] = el;
-          return (
-            <Link to={address} key={idx}>
-              <Menu>{menu}</Menu>
-            </Link>
-          );
-        })}
-      </NavbarLeft>
-    </NavbarContainer>
+    <>
+      <NavbarContainer>
+        <Logo />
+        <MenuList />
+      </NavbarContainer>
+      <ExtendedNavbar />
+    </>
   );
 };
 
