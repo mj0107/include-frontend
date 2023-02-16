@@ -10,11 +10,22 @@ const Wrapper = styled.div`
 `;
 
 const MemberList = (props) => {
+  const openFormHandler = () => {
+    props.onOpenForm();
+  }
+
   return (
     <Wrapper>
       <ul>
         {props.memberList.map((member) => {
-          return <Member key={member.ID_PK} info={member} onDelete={props.onDelete}/>;
+          return (
+            <Member
+              key={member.ID_PK}
+              info={member}
+              onDelete={props.onDelete}
+              onOpenForm={openFormHandler}
+            />
+          );
         })}
       </ul>
     </Wrapper>

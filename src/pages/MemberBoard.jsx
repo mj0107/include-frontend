@@ -6,6 +6,14 @@ import StudentForm from '../components/StudentForm/StudentForm';
 
 const MemberBoard = () => {
   const [memberList, setMemberList] = useState([]);
+  const [openForm, setOpenForm] = useState(false);
+
+  const closeFormHandler = () => {
+    setOpenForm(false);
+  };
+  const openFormHandler = () => {
+    setOpenForm(true);
+  };
 
   const deleteMemberHandler = (ID_PK) => {
     axios
@@ -31,8 +39,12 @@ const MemberBoard = () => {
 
   return (
     <>
-      <MemberList memberList={memberList} onDelete={deleteMemberHandler} />
-      {/* <StudentForm onCreateHandler={onCreaterHandler} /> */}
+      <MemberList
+        memberList={memberList}
+        onDelete={deleteMemberHandler}
+        onOpenForm={openFormHandler}
+      />
+      {openForm && <StudentForm onClose={closeFormHandler} />}
     </>
   );
 };
