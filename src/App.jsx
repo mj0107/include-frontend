@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
-import ExtendedNavbar from './components/Navbar/ExtendedNavbar';
 
 import './App.css';
+import MemberBoard from './pages/MemberBoard';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path='/'>HomePage</Route>
-          <Route path='/member'>MemberPage</Route>
+          <Route path='/member' element={<MemberBoard />}>MemberPage</Route>
           <Route path='/activity'>ActivityPage</Route>
           <Route path='*'>Not Found</Route>
         </Routes>
