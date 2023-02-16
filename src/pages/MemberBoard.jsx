@@ -7,6 +7,22 @@ import StudentForm from '../components/StudentForm/StudentForm';
 const MemberBoard = () => {
   const [memberList, setMemberList] = useState([]);
 
+  const deleteMemberHandler = (ID_PK) => {
+    axios
+      .delete(`http://localhost:8080/member/${ID_PK}`, {
+        data: { idx: ID_PK },
+      })
+      .then((res) => {
+        setMemberList(
+          memberList.filter((member) => {
+            return member.ID_PK !== ID_PK;
+          })
+        );
+        console.log(`ID_PK: ${ID_PK} deleted`);
+        console.log(res);
+      });
+  };
+
   useEffect(() => {
     axios
       .get('http://localhost:8080/member/list')
@@ -15,8 +31,8 @@ const MemberBoard = () => {
 
   return (
     <>
-      <MemberList memberList={memberList} />
-      {/* <StudentForm memberList={memberList} /> */}
+      <MemberList memberList={memberList} onDelete={deleteMemberHandler} />
+      {/* <StudentForm onCreateHandler={onCreaterHandler} /> */}
     </>
   );
 };

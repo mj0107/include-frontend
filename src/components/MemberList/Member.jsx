@@ -21,8 +21,12 @@ const Wrapper = styled.div`
 `;
 
 const Member = (props) => {
-  const { studentID, name, first_track, second_track, git_hub, email } =
+  const { ID_PK, studentID, name, first_track, second_track, git_hub, email } =
     props.info;
+  
+  const deleteMemberHandler = () => {
+    props.onDelete(ID_PK);
+  }
 
   return (
     <Wrapper>
@@ -37,8 +41,8 @@ const Member = (props) => {
       <div className='github'>{git_hub}</div>
       <div className='email'>{email}</div>
       <div>
-        <div>수정</div>
-        <div>삭제</div>
+        <button>수정</button>
+        <button onClick={deleteMemberHandler}>삭제</button>
       </div>
     </Wrapper>
   );

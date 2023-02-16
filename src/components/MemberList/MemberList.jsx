@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Member from './Member';
 
@@ -10,14 +10,11 @@ const Wrapper = styled.div`
 `;
 
 const MemberList = (props) => {
-  const [graduateList, setGraduateList] = useState([]);
-  const [undergraduateList, setUndergraduateList] = useState([]);
-
   return (
     <Wrapper>
       <ul>
         {props.memberList.map((member) => {
-          return <Member key={member.ID_PK} info={member}/>;
+          return <Member key={member.ID_PK} info={member} onDelete={props.onDelete}/>;
         })}
       </ul>
     </Wrapper>
