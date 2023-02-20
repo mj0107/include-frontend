@@ -6,18 +6,38 @@ import StudentForm from '../components/StudentForm/StudentForm';
 
 const MemberBoard = () => {
   const [memberList, setMemberList] = useState([]);
-  const [openForm, setOpenForm] = useState(false);
+  const [openCreateForm, setOpenCreateForm] = useState(false);
+  const [openUpdateForm, setOpenUpdateForm] = useState(false);
 
   const closeFormHandler = () => {
-    setOpenForm(false);
+    setOpenCreateForm(false);
+    setOpenUpdateForm(false);
   };
-  const openFormHandler = () => {
-    setOpenForm(true);
+  const openCreateFormHandler = () => {
+    setOpenCreateForm(true);
+  };
+  const openUpdateFormHandler = () => {
+    setOpenUpdateForm(true);
   };
 
+  // Create
+  const createMemberHandler = (e, memberInfo) => {
+    console.log('create: ', memberInfo);
+    e.preventDefault();
+
+    axios
+      .post('http://localhost:8080/member/post', memberInfo)
+      .then((res) => {
+        console.log(res);
+        const ID_PK = res.data.insertId;
+        setMemberList([...memberList, {ID_PK: ID_PK, ...memberInfo}]);
+      });
+  };
+
+  // Delete
   const deleteMemberHandler = (ID_PK) => {
     axios
-      .delete(`http://localhost:8080/member/${ID_PK}`, {
+      .delete(`http://localhost:8080/member/list?idx=${ID_PK}`, {
         data: { idx: ID_PK },
       })
       .then((res) => {
@@ -31,6 +51,7 @@ const MemberBoard = () => {
       });
   };
 
+  // Read
   useEffect(() => {
     axios
       .get('http://localhost:8080/member/list')
@@ -42,9 +63,18 @@ const MemberBoard = () => {
       <MemberList
         memberList={memberList}
         onDelete={deleteMemberHandler}
-        onOpenForm={openFormHandler}
+        onOpenCreateForm={openCreateFormHandler}
+        onOpenUpdateForm={openUpdateFormHandler}
       />
-      {openForm && <StudentForm onClose={closeFormHandler} />}
+      {(openCreateForm || openUpdateForm) && (
+        <StudentForm
+          memberList={memberList}
+          onCreate={createMemberHandler}
+          onClose={closeFormHandler}
+          isOpenCreateForm={openCreateForm}
+          isOpenUpdateForm={openUpdateForm}
+        />
+      )}
     </>
   );
 };

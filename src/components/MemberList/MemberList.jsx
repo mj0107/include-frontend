@@ -10,12 +10,18 @@ const Wrapper = styled.div`
 `;
 
 const MemberList = (props) => {
-  const openFormHandler = () => {
-    props.onOpenForm();
+  const openCreateFormHandler = () => {
+    props.onOpenCreateForm();
   }
+  const openUpdateFormHandler = () => {
+    props.onOpenUpdateForm();
+  }
+
+  console.log('props.memberList: ', props.memberList);
 
   return (
     <Wrapper>
+      <button onClick={openCreateFormHandler}>등록</button>
       <ul>
         {props.memberList.map((member) => {
           return (
@@ -23,7 +29,7 @@ const MemberList = (props) => {
               key={member.ID_PK}
               info={member}
               onDelete={props.onDelete}
-              onOpenForm={openFormHandler}
+              onOpenUpdateForm={openUpdateFormHandler}
             />
           );
         })}

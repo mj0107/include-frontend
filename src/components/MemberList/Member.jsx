@@ -27,9 +27,8 @@ const Member = (props) => {
   const deleteMemberHandler = () => {
     props.onDelete(ID_PK);
   }
-
-  const openFormHandler = () => {
-    props.onOpenForm();
+  const openUpdateFormHandler = () => {
+    props.onOpenUpdateForm();
   }
 
   return (
@@ -45,7 +44,7 @@ const Member = (props) => {
       <div className='github'>{git_hub}</div>
       <div className='email'>{email}</div>
       <div>
-        <button onClick={openFormHandler}>수정</button>
+        <button onClick={openUpdateFormHandler}>수정</button>
         <button onClick={deleteMemberHandler}>삭제</button>
       </div>
     </Wrapper>

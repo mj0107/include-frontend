@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -24,28 +23,21 @@ const Wrapper = styled.div`
 `;
 
 const StudentForm = (props) => {
-  const onSubmitHandler = (e) => {
-    console.log('submit');
-    e.preventDefault();
-
-    axios
-      .post('http://localhost:8080/member/create', {
-        studentID: studentId,
-        name: name,
-        first_track: firstTrack,
-        second_track: secondTrack,
-        git_hub: github,
-        email: email,
-        graduation: graduation,
-      })
-      .then((res) => {
-        console.log(res);
-      });
-  };
-
   const closeFormHandler = () => {
     props.onClose();
-  }
+  };
+
+  const createMemberHandler = (e) => {
+    props.onCreate(e, {
+      studentID: studentId,
+      name: name,
+      first_track: firstTrack,
+      second_track: secondTrack,
+      git_hub: github,
+      email: email,
+      graduation: graduation,
+    });
+  };
 
   const [studentId, setStudentId] = useState();
   const [name, setName] = useState();
@@ -57,7 +49,7 @@ const StudentForm = (props) => {
 
   return (
     <Wrapper>
-      <form method="post" onSubmit={onSubmitHandler}>
+      <form method="post" onSubmit={createMemberHandler}>
         <div>
           학번:{' '}
           <input
@@ -113,8 +105,11 @@ const StudentForm = (props) => {
         </div>
 
         <div className="footer">
-          <input type="submit" />
-          <input type="button" value="닫기" onClick={closeFormHandler}/>
+          {props.isOpenUpdateForm && <input type="button" value="수정" />}
+          {props.isOpenCreateForm && (
+            <input type="button" value="등록" onClick={createMemberHandler} />
+          )}
+          <input type="button" value="닫기" onClick={closeFormHandler} />
         </div>
       </form>
     </Wrapper>
