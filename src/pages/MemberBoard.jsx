@@ -8,6 +8,7 @@ const MemberBoard = () => {
   const [memberList, setMemberList] = useState([]);
   const [openCreateForm, setOpenCreateForm] = useState(false);
   const [openUpdateForm, setOpenUpdateForm] = useState(false);
+  const [updatedMemberPK, setUpdatedMemberPK] = useState(-1);
 
   const closeFormHandler = () => {
     setOpenCreateForm(false);
@@ -19,18 +20,34 @@ const MemberBoard = () => {
   const openUpdateFormHandler = () => {
     setOpenUpdateForm(true);
   };
+  const setUpdatedPkHandler = (ID_PK) => {
+    setUpdatedMemberPK(ID_PK);
+  };
 
   // Create
   const createMemberHandler = (e, memberInfo) => {
     console.log('create: ', memberInfo);
     e.preventDefault();
 
+    axios.post('http://localhost:8080/member/post', memberInfo).then((res) => {
+      console.log(res);
+      const ID_PK = res.data.insertId;
+      setMemberList([...memberList, { ID_PK: ID_PK, ...memberInfo }]);
+    });
+  };
+
+  // Update
+  const updateMemberHandler = (e, memberInfo) => {
+    console.log('update: ', memberInfo);
+    e.preventDefault();
+
     axios
-      .post('http://localhost:8080/member/post', memberInfo)
+      .put(
+        `http://localhost:8080/member/post?idx=${updatedMemberPK}`,
+        memberInfo
+      )
       .then((res) => {
         console.log(res);
-        const ID_PK = res.data.insertId;
-        setMemberList([...memberList, {ID_PK: ID_PK, ...memberInfo}]);
       });
   };
 
@@ -65,11 +82,13 @@ const MemberBoard = () => {
         onDelete={deleteMemberHandler}
         onOpenCreateForm={openCreateFormHandler}
         onOpenUpdateForm={openUpdateFormHandler}
+        onUpdatedPk={setUpdatedPkHandler}
       />
       {(openCreateForm || openUpdateForm) && (
         <StudentForm
           memberList={memberList}
           onCreate={createMemberHandler}
+          onUpdate={updateMemberHandler}
           onClose={closeFormHandler}
           isOpenCreateForm={openCreateForm}
           isOpenUpdateForm={openUpdateForm}

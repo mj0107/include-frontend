@@ -39,6 +39,18 @@ const StudentForm = (props) => {
     });
   };
 
+  const updateMemberHandler = (e) => {
+    props.onUpdate(e, {
+      studentID: studentId,
+      name: name,
+      first_track: firstTrack,
+      second_track: secondTrack,
+      git_hub: github,
+      email: email,
+      graduation: graduation,
+    });
+  };
+
   const [studentId, setStudentId] = useState();
   const [name, setName] = useState();
   const [firstTrack, setFirstTrack] = useState('');
@@ -49,7 +61,7 @@ const StudentForm = (props) => {
 
   return (
     <Wrapper>
-      <form method="post" onSubmit={createMemberHandler}>
+      <form>
         <div>
           학번:{' '}
           <input
@@ -105,7 +117,9 @@ const StudentForm = (props) => {
         </div>
 
         <div className="footer">
-          {props.isOpenUpdateForm && <input type="button" value="수정" />}
+          {props.isOpenUpdateForm && (
+            <input type="button" value="수정" onClick={updateMemberHandler} />
+          )}
           {props.isOpenCreateForm && (
             <input type="button" value="등록" onClick={createMemberHandler} />
           )}

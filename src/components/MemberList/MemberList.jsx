@@ -30,6 +30,7 @@ const MemberList = (props) => {
               info={member}
               onDelete={props.onDelete}
               onOpenUpdateForm={openUpdateFormHandler}
+              onUpdatedPk={props.onUpdatedPk}
             />
           );
         })}
