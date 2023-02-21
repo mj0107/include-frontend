@@ -41,7 +41,6 @@ const StudentForm = (props) => {
 
   const updateMemberHandler = (e) => {
     props.onUpdate(e, {
-      studentID: studentId,
       name: name,
       first_track: firstTrack,
       second_track: secondTrack,
@@ -62,13 +61,15 @@ const StudentForm = (props) => {
   return (
     <Wrapper>
       <form>
-        <div>
-          학번:{' '}
-          <input
-            name="studentID"
-            onChange={(e) => setStudentId(e.target.value)}
-          />
-        </div>
+        {props.isOpenCreateForm && (
+          <div>
+            학번:{' '}
+            <input
+              name="studentID"
+              onChange={(e) => setStudentId(e.target.value)}
+            />
+          </div>
+        )}
         <div>
           이름: <input name="name" onChange={(e) => setName(e.target.value)} />
         </div>

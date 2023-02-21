@@ -48,24 +48,33 @@ const MemberBoard = () => {
       )
       .then((res) => {
         console.log(res);
+        const updatedMemberList = memberList.map((member, idx) => {
+          if (member.ID_PK === updatedMemberPK) {
+            return (memberList[idx] = { ...memberList[idx], ...memberInfo });
+          } else return member;
+        });
+
+        setMemberList(updatedMemberList);
       });
   };
 
   // Delete
   const deleteMemberHandler = (ID_PK) => {
-    axios
-      .delete(`http://localhost:8080/member/list?idx=${ID_PK}`, {
-        data: { idx: ID_PK },
-      })
-      .then((res) => {
-        setMemberList(
-          memberList.filter((member) => {
-            return member.ID_PK !== ID_PK;
-          })
-        );
-        console.log(`ID_PK: ${ID_PK} deleted`);
-        console.log(res);
-      });
+    if (confirm('삭제하시겠습니까?')) {
+      axios
+        .delete(`http://localhost:8080/member/list?idx=${ID_PK}`, {
+          data: { idx: ID_PK },
+        })
+        .then((res) => {
+          setMemberList(
+            memberList.filter((member) => {
+              return member.ID_PK !== ID_PK;
+            })
+          );
+          console.log(`ID_PK: ${ID_PK} deleted`);
+          console.log(res);
+        });
+    }
   };
 
   // Read
