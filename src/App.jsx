@@ -4,6 +4,7 @@ import Navbar from './components/Navbar/Navbar';
 
 import './App.css';
 import MemberBoard from './pages/MemberBoard';
+import LoginForm from './components/LoginForm/LoginForm';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='*'>Not Found</Route>
         </Routes>
       </BrowserRouter>
+      <LoginForm />
     </>
   );
 }
