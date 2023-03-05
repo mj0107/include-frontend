@@ -1,5 +1,5 @@
-import axios from 'axios';
 import React, { useState } from 'react';
+import useLoginStore from '../../store/loginStore';
 
 import {
   Wrapper,
@@ -14,6 +14,8 @@ const LoginForm = () => {
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
 
+  const login = useLoginStore((state) => state.actions.login);
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -22,11 +24,7 @@ const LoginForm = () => {
       pwd: pw,
     };
 
-    axios
-      .post(`http://localhost:8080/login`, loginData)
-      .then((res) => {
-        console.log(res);
-      });
+    login(loginData);
   };
 
   return (
@@ -41,11 +39,13 @@ const LoginForm = () => {
             type="text"
             placeholder="ID"
             onChange={(e) => setId(e.target.value)}
+            name="id"
           ></input>
           <input
             type="password"
             placeholder="Password"
             onChange={(e) => setPw(e.target.value)}
+            name="pwd"
           ></input>
         </Input>
         <LoginButton>Login</LoginButton>

@@ -1,27 +1,22 @@
 import axios from 'axios';
 import { create } from 'zustand';
 
-export const useLoginStore = create((set) => ({
-  // activityList: [],
-  // fetchActivityList: async () => {
-  //   try {
-  //     const response = await axios.get(`http://localhost:8080/activity/list`);
-  //     set((state) => ({
-  //       activityList: (state.activityList = response.data)
-  //     }));
-  //   } catch (err) {
-  //     console.log('fetch error occured!');
-  //   }
-  // },
+const useLoginStore = create((set) => ({
   isLoggedIn: false,
-  login: async () => {
-    try {
-      const response = await axios.get(`http://localhost:8080/login`);
-      set((state) => ({
-        isLoggedIn: (state.isLoggedIn = response)
-      }))
-    } catch(err) {
-      console.log('login error!');
-    }
-  }
+  actions: {
+    login: async (loginData) => {
+      await axios
+        .post(`http://localhost:8080/login`, loginData, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log('login success!');
+          set((state) => ({
+            isLoggedIn: (state.isLoggedIn = res.status === 200 ? true : false),
+          }));
+        });
+    },
+  },
 }));
+
+export default useLoginStore;
