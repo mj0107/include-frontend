@@ -29,14 +29,25 @@ const MemberBoard = () => {
   return (
     <>
       <div className="flex">
-        <label className="label cursor-pointer" onClick={setStudentHandler}>
+        <label className="label cursor-pointer">
           <span className="label-text">재학생</span>
-          <input type="radio" name="isGraduate" className="radio" checked />
+          <input
+            type="radio"
+            name="isGraduate"
+            className="radio"
+            onChange={setStudentHandler}
+            checked
+          />
         </label>
 
-        <label className="label cursor-pointer" onClick={setGraduateHandler}>
+        <label className="label cursor-pointer">
           <span className="label-text">졸업생</span>
-          <input type="radio" name="isGraduate" className="radio" />
+          <input
+            type="radio"
+            name="isGraduate"
+            className="radio"
+            onChange={setGraduateHandler}
+          />
         </label>
       </div>
 
