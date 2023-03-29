@@ -13,8 +13,6 @@ const Member = ({
   const ICON_COLOR = git_hub ? 'black' : 'gray';
   const GITHUB_URL = git_hub;
 
-  console.log(studentID);
-
   return (
     <tr>
       <td>
