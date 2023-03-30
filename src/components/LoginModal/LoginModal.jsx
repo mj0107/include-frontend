@@ -1,13 +1,37 @@
+import axios from 'axios';
 import React from 'react';
+import { useState } from 'react';
 
 const LoginModal = () => {
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+    const loginInfo = {
+      id: id,
+      pwd: password,
+    };
+    axios
+      .post('http://localhost:8080/login', loginInfo)
+      .then((res) => {
+        if(res.status === 200) {
+          let loginModal = document.querySelector('#login-modal');
+          loginModal.checked = false;
+        }
+      });
+  };
+
   return (
     <div className="modal">
       <div className="modal-box relative">
-        <label htmlFor='login-modal' className="btn btn-sm btn-circle absolute right-2 top-2">
+        <label
+          htmlFor="login-modal"
+          className="btn btn-sm btn-circle absolute right-2 top-2"
+        >
           ✕
         </label>
-        <form className="mt-8 space-y-6" action="#" method="POST">
+        <form className="mt-8 space-y-6" onSubmit={loginHandler}>
           <div className="-space-y-px rounded-md shadow-sm">
             <div>
               <label htmlFor="admin-id" className="sr-only">
@@ -21,6 +45,7 @@ const LoginModal = () => {
                 required
                 className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:pl-2 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-black-600 sm:text-sm sm:leading-6"
                 placeholder="Admin ID"
+                onChange={(e) => setId(e.target.value)}
               />
             </div>
             <div>
@@ -35,6 +60,7 @@ const LoginModal = () => {
                 required
                 className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:pl-2 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-black-600 sm:text-sm sm:leading-6"
                 placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
