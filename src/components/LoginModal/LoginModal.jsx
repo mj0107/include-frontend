@@ -13,9 +13,11 @@ const LoginModal = () => {
       pwd: password,
     };
     axios
-      .post('http://localhost:8080/login', loginInfo)
+      .post('http://localhost:8080/login', loginInfo, {
+        withCredentials: true,
+      })
       .then((res) => {
-        if(res.status === 200) {
+        if (res.status === 200) {
           let loginModal = document.querySelector('#login-modal');
           loginModal.checked = false;
         }
