@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -9,6 +10,13 @@ const Navbar = () => {
     Member: '/member',
     Activity: '/activity',
   };
+
+  // logout
+  const logoutHandler = () => {
+    axios.post('http://localhost:8080/logout').then((res) => {
+      console.log(res);
+    });
+  }
 
   return (
     <>
@@ -61,6 +69,7 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           <label htmlFor='login-modal' className="btn">Login</label>
+          <label className='btn' onClick={logoutHandler}>Logout</label>
         </div>
       </div>
 
