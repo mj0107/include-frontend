@@ -6,17 +6,25 @@ const LoginModal = () => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
+  // 로그인을 수행하는 함수
+  // (현재 로그인 성공시 Cookie는 생기는데 session 값이 생기지 않습니다.)
+  // 임의로 로그아웃 버튼을 만들어 로그인 후 해보았는데 로그아웃이 수행되지 않음.
+  // => 로그인이 되어 있지 않다고 auth error를 받음.
   const loginHandler = (e) => {
+    // 기본 submit event 막음
     e.preventDefault();
+    // state에 담겨있는 id와 password를 객체에 담음
     const loginInfo = {
       id: id,
       pwd: password,
     };
+    // login 라우터로 데이터 보냄
     axios
       .post('http://localhost:8080/login', loginInfo, {
         withCredentials: true,
       })
       .then((res) => {
+        // 로그인 성공 코드 200을 받으면 login창 close
         if (res.status === 200) {
           let loginModal = document.querySelector('#login-modal');
           loginModal.checked = false;
